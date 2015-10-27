@@ -4,24 +4,17 @@ import re
 
 page = 1
 user_agent = 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'
-#url = 'http://www.qiushibaike.com/hot/page/'+str(page)
-url = 'http://www.yingjiesheng.com'
+url = 'http://www.qiushibaike.com/hot/page/'+str(page)
 headers = {'User-Agent': user_agent}
 
 if __name__ == "__main__":
     try:
-        request = urllib2.Request(url,headers=headers)
+        request = urllib2.Request(url, headers=headers)
         response=urllib2.urlopen(request)
         content = response.read().decode('utf-8')
-#        pattern = re.compile('<div.*?author">.*?<a.*?<img.*?>(.*?)</a>.*?<div.*?'+
-#                         'content">(.*?)<!--(.*?)-->.*?</div>(.*?)<div class="stats.*?class="number">(.*?)</i>',re.S)
-        pattern =re.compile('<a href="(.*?)" target.*?>')
+        pattern = re.compile('<div.*?author">.*?<a.*?<img.*?>(.*?)</a>.*?<div.*?'+
+                         'content">(.*?)<!--(.*?)-->.*?</div>(.*?)<div class="stats.*?class="number">(.*?)</i>',re.S)
 
-#UnicodeDecodeError: 'utf8' codec can't decode byte 0xbd in position 250: invalid start byte
-# how to address this
-
-
-#zhengze biaodashi
         items = re.findall(pattern,content)
         for item in items:
             haveImg = re.search("img", item[3])
@@ -32,3 +25,5 @@ if __name__ == "__main__":
             print e.code
         if hasattr(e, "reason"):
             print e.reason
+
+
